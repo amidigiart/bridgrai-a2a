@@ -27,6 +27,7 @@ from agents.acr_a2a import ACRAgent
 from agents.concordance_a2a import ConcordanceAgent
 from agents.calibration_a2a import CalibrationAgent
 from agents.heritage_a2a import HeritageAgent, HERITAGE_ASSETS
+from agents.maestru_a2a import MaestruAgent
 
 
 async def main():
@@ -46,6 +47,19 @@ async def main():
     concordance = ConcordanceAgent(trust=trust)
     calibration = CalibrationAgent(trust=trust)
     heritage = HeritageAgent(trust=trust)
+    maestru = MaestruAgent(
+        trust=trust,
+        agents={
+            "agent-de-sens": sens,
+            "acr-engine": acr,
+            "agent-concordance": concordance,
+            "agent-calibration": calibration,
+            "agent-heritage": heritage,
+            "ukbe-core": ukbe,
+            "casp-dual-engine": casp,
+            "hasn-security": hasn,
+        },
+    )
 
     print(f"  Agenti inregistrati: {len(trust._identities)}")
     for aid in trust._identities:
@@ -326,9 +340,57 @@ async def main():
                 print(f"      {line}")
     print()
 
+    # --- Test 18: Maestru — Pipeline Plan (dry run) ---
+    print("  [18] MAESTRU: Pipeline Plan (dry run)...")
+    plan_msg = Message(role="user", parts=[Part(type=PartType.TEXT, text="plan pipeline analizeaza acest mesaj despre trust si safety")])
+    rpc = jsonrpc_request("tasks/send", {"message": plan_msg.to_dict()})
+    result = await maestru._process_rpc(rpc)
+    task_result = result.get("result", {})
+    for part in task_result.get("status", {}).get("message", {}).get("parts", []):
+        if part.get("text"):
+            for line in part["text"].split("\n"):
+                print(f"      {line}")
+    print()
+
+    # --- Test 19: Maestru — Orchestrare Standard ---
+    print("  [19] MAESTRU: Orchestrare standard (auto-detect)...")
+    orch_msg = Message(role="user", parts=[Part(type=PartType.TEXT, text="certify meaning: Acest sistem certifica sensul si intentia, nu doar existenta. Verificat de 3 AI-uri independente.")])
+    rpc = jsonrpc_request("tasks/send", {"message": orch_msg.to_dict()})
+    result = await maestru._process_rpc(rpc)
+    task_result = result.get("result", {})
+    for part in task_result.get("status", {}).get("message", {}).get("parts", []):
+        if part.get("text"):
+            for line in part["text"].split("\n"):
+                print(f"      {line}")
+    print()
+
+    # --- Test 20: Maestru — Full Audit (toti agentii) ---
+    print("  [20] MAESTRU: Full Audit (toti 8 agentii)...")
+    audit_msg = Message(role="user", parts=[Part(type=PartType.TEXT, text="full audit: Platforma BRIDGRAI certifica siguranta si sensul comunicarii inter-agent.")])
+    rpc = jsonrpc_request("tasks/send", {"message": audit_msg.to_dict()})
+    result = await maestru._process_rpc(rpc)
+    task_result = result.get("result", {})
+    for part in task_result.get("status", {}).get("message", {}).get("parts", []):
+        if part.get("text"):
+            for line in part["text"].split("\n"):
+                print(f"      {line}")
+    print()
+
+    # --- Test 21: Maestru — Ecosystem Map ---
+    print("  [21] MAESTRU: Ecosystem Map...")
+    map_msg = Message(role="user", parts=[Part(type=PartType.TEXT, text="ecosystem map")])
+    rpc = jsonrpc_request("tasks/send", {"message": map_msg.to_dict()})
+    result = await maestru._process_rpc(rpc)
+    task_result = result.get("result", {})
+    for part in task_result.get("status", {}).get("message", {}).get("parts", []):
+        if part.get("text"):
+            for line in part["text"].split("\n"):
+                print(f"      {line}")
+    print()
+
     # --- Agent Cards ---
-    print("  [18] Agent Cards (A2A Protocol)...")
-    for agent in [ukbe, casp, hasn, sens, acr, concordance, calibration, heritage]:
+    print("  [22] Agent Cards (A2A Protocol)...")
+    for agent in [ukbe, casp, hasn, sens, acr, concordance, calibration, heritage, maestru]:
         card = agent.card.to_dict()
         print(f"      {card['name']}:")
         print(f"        URL: {card['url']}")
@@ -338,7 +400,7 @@ async def main():
     print()
 
     print("=" * 60)
-    print("  PLATFORMA A2A OPERATIONALA — 8 AGENTI")
+    print("  PLATFORMA A2A OPERATIONALA — 9 AGENTI")
     print(f"  Agenti: {len(trust._identities)}")
     print(f"  Trust records: {len(trust._ledger)}")
     print(f"  Certificari sens: {len(sens._certification_log)}")
@@ -346,6 +408,7 @@ async def main():
     print(f"  Verdicte concordanta: {len(concordance._verdicts)}")
     print(f"  Calibrari sistem: {len(calibration._calibration_log)}")
     print(f"  Active mostenire: {len(HERITAGE_ASSETS)}")
+    print(f"  Orchestrari Maestru: {len(maestru._orchestrations)}")
     print(f"  Master Hash: {trust.master_hash()[:32]}...")
     print()
     print("  S(M) = R — intotdeauna.")

@@ -65,6 +65,7 @@ def main():
             ("Concordance", "bridgrai_a2a._apps:concordance_app", args.host, 8006),
             ("Calibration", "bridgrai_a2a._apps:calibration_app", args.host, 8007),
             ("Heritage", "bridgrai_a2a._apps:heritage_app", args.host, 8008),
+            ("Maestru", "bridgrai_a2a._apps:maestru_app", args.host, 8009),
         ])
 
     for name, module_path, host, port in configs:
@@ -86,6 +87,7 @@ def main():
         print(f"    CONCORD:  http://{args.host}:8006")
         print(f"    CALIBR:   http://{args.host}:8007")
         print(f"    HERITAGE: http://{args.host}:8008")
+        print(f"    MAESTRU:  http://{args.host}:8009")
     print()
     print("  Agent Cards:")
     print(f"    http://{args.host}:8100/.well-known/agent.json")
@@ -98,6 +100,7 @@ def main():
         print(f"    http://{args.host}:8006/.well-known/agent.json")
         print(f"    http://{args.host}:8007/.well-known/agent.json")
         print(f"    http://{args.host}:8008/.well-known/agent.json")
+        print(f"    http://{args.host}:8009/.well-known/agent.json")
     print()
     print("  Press Ctrl+C to stop all agents.")
     print("=" * 60)

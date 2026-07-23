@@ -48,3 +48,19 @@ calibration_app = calibration_agent.create_app()
 from agents.heritage_a2a import HeritageAgent  # noqa: E402
 heritage_agent = HeritageAgent(trust=trust)
 heritage_app = heritage_agent.create_app()
+
+from agents.maestru_a2a import MaestruAgent  # noqa: E402
+maestru_agent = MaestruAgent(
+    trust=trust,
+    agents={
+        "agent-de-sens": sens_agent,
+        "acr-engine": acr_agent,
+        "agent-concordance": concordance_agent,
+        "agent-calibration": calibration_agent,
+        "agent-heritage": heritage_agent,
+        "ukbe-core": ukbe_agent,
+        "casp-dual-engine": casp_agent,
+        "hasn-security": hasn_agent,
+    },
+)
+maestru_app = maestru_agent.create_app()

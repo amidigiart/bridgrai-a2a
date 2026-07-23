@@ -1,25 +1,41 @@
 # BRIDGRAI A2A Platform
 
-**8 agents. 1 trust layer. Zero confabulation tolerance.**
+**9 agents. 5 layers. 1 trust layer. Zero confabulation tolerance.**
 
 Agent-to-Agent communication platform built on Google's A2A protocol (JSON-RPC 2.0) with the Notar de Sens trust layer — the first system that certifies MEANING and INTENTION of inter-agent messages, not just format or safety.
 
 ## Architecture
 
 ```
-                    BRIDGRAI Hub (:8100)
-                   discovery + routing + trust
-                          |
-    ┌─────────┬──────────┼──────────┬──────────┐
-    |         |          |          |          |
-  UKBE      CASP       HASN     Agent de    ACR
-  :8001     :8002      :8003     Sens       :8005
-                                 :8004
-    |         |          |          |          |
-    ├─────────┴──────────┼──────────┴──────────┤
-    |                    |                     |
-  Concordance       Calibration           Heritage
-  :8006             :8007                 :8008
+              LAYER 4: ORCHESTRARE
+              ┌──────────────────────┐
+              │  MAESTRU (:8009)     │
+              │  Creierul platformei │
+              └──────────┬───────────┘
+                         │
+              LAYER 3: VERIFICARE
+              ┌──────────┴───────────┐
+              │ Concordance  Calibr. │
+              │ :8006        :8007   │
+              └──────────┬───────────┘
+                         │
+              LAYER 2: CERTIFICARE
+              ┌──────────┴───────────┐
+              │ Sens (:8004)  ACR    │
+              │ TVE 6-pillar  :8005  │
+              └──────────┬───────────┘
+                         │
+              LAYER 1: FUNDATIE
+    ┌─────────┬──────────┼──────────┐
+    │ UKBE    │  CASP    │  HASN    │
+    │ :8001   │  :8002   │  :8003   │
+    └─────────┴──────────┼──────────┘
+                         │
+              LAYER 0: MOSTENIRE
+              ┌──────────┴───────────┐
+              │  Heritage (:8008)    │
+              └──────────────────────┘
+           BRIDGRAI Hub (:8100) — trust
 ```
 
 ## Agents
@@ -34,6 +50,7 @@ Agent-to-Agent communication platform built on Google's A2A protocol (JSON-RPC 2
 | **Concordance** | 8006 | Multi-agent truth verification — P(confab) = p^N | 3 |
 | **Calibration** | 8007 | Adler/Kuramoto system-level phase synchronization | 3 |
 | **Heritage** | 8008 | Transgenerational digital custodian, Mars 2% compatible | 4 |
+| **Maestru** | 8009 | Cognitive orchestrator — auto-detects needs, builds pipeline, executes, unifies | 4 |
 
 ## Trust Layer
 
@@ -46,7 +63,7 @@ Every inter-agent message is:
 ## Run
 
 ```bash
-# Demo (no servers needed — runs in-process)
+# Demo (no servers needed — runs in-process, 22 tests)
 python demo_local.py
 
 # Full platform (8 agents + hub on separate ports)
