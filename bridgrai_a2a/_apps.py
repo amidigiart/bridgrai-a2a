@@ -49,6 +49,10 @@ from agents.heritage_a2a import HeritageAgent  # noqa: E402
 heritage_agent = HeritageAgent(trust=trust)
 heritage_app = heritage_agent.create_app()
 
+from agents.quantum_a2a import QuantumAgent  # noqa: E402
+quantum_agent = QuantumAgent()
+quantum_app = quantum_agent.create_app()
+
 from agents.maestru_a2a import MaestruAgent  # noqa: E402
 maestru_agent = MaestruAgent(
     trust=trust,
@@ -61,6 +65,7 @@ maestru_agent = MaestruAgent(
         "ukbe-core": ukbe_agent,
         "casp-dual-engine": casp_agent,
         "hasn-security": hasn_agent,
+        "agent-quantum": quantum_agent,
     },
 )
 maestru_app = maestru_agent.create_app()

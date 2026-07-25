@@ -6,6 +6,7 @@ Porturi:
   8001 — UKBE Core (Kuramoto + notary + DID)
   8002 — CASP DualEngine (dual-engine + validare semantica)
   8003 — HASN Security (bridge catre Node.js backend)
+  8009 — Quantum Notary (post-quantum trust layer)
 
 Utilizare:
   python launcher.py              # porneste tot
@@ -65,7 +66,8 @@ def main():
             ("Concordance", "bridgrai_a2a._apps:concordance_app", args.host, 8006),
             ("Calibration", "bridgrai_a2a._apps:calibration_app", args.host, 8007),
             ("Heritage", "bridgrai_a2a._apps:heritage_app", args.host, 8008),
-            ("Maestru", "bridgrai_a2a._apps:maestru_app", args.host, 8009),
+            ("Quantum Notary", "bridgrai_a2a._apps:quantum_app", args.host, 8009),
+            ("Maestru", "bridgrai_a2a._apps:maestru_app", args.host, 8010),
         ])
 
     for name, module_path, host, port in configs:
@@ -87,7 +89,8 @@ def main():
         print(f"    CONCORD:  http://{args.host}:8006")
         print(f"    CALIBR:   http://{args.host}:8007")
         print(f"    HERITAGE: http://{args.host}:8008")
-        print(f"    MAESTRU:  http://{args.host}:8009")
+        print(f"    QUANTUM:  http://{args.host}:8009")
+        print(f"    MAESTRU:  http://{args.host}:8010")
     print()
     print("  Agent Cards:")
     print(f"    http://{args.host}:8100/.well-known/agent.json")
@@ -100,7 +103,8 @@ def main():
         print(f"    http://{args.host}:8006/.well-known/agent.json")
         print(f"    http://{args.host}:8007/.well-known/agent.json")
         print(f"    http://{args.host}:8008/.well-known/agent.json")
-        print(f"    http://{args.host}:8009/.well-known/agent.json")
+        print(f"    http://{args.host}:8009/.well-known/agent.json  (Quantum)")
+        print(f"    http://{args.host}:8010/.well-known/agent.json")
     print()
     print("  Press Ctrl+C to stop all agents.")
     print("=" * 60)
